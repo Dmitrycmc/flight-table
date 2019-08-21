@@ -1,0 +1,42 @@
+{
+  "name": "flight-table",
+  "author": {
+    "name": "Lytov Dmitry",
+    "email": "Dmitrycmc@gmail.com",
+    "url": "https://github.com/Dmitrycmc"
+  },
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "http://Dmitrycmc.github.io/flight-table",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "lint:fix": "npm run lint-css:fix && npm run lint-css-legacy:fix && npm run lint-js:fix",
+    "lint-js:fix": "eslint src --fix",
+    "lint-css:fix": "stylelint \"src/**/*.js\" --syntax css-in-js --fix",
+    "lint-css-legacy:fix": "stylelint \"src/**/*.css\" --config .stylelintrc-legacy.json --fix"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "react-scripts": "^2.1.8",
+    "gh-pages": "^2.0.1",
+    "eslint-plugin-prettier": "^3.0.0",
+    "prettier": "^1.15.2",
+    "stylelint": "^9.10.1",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-order": "^2.1.0"
+  }
+}

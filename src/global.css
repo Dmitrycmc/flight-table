@@ -1,0 +1,32 @@
+html {
+  font-size: 16px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+body {
+margin: 0;
+
+  text-align: center;
+
+  background-color: white;
+
+  transition: background-color 0.2s, color 0.2s;
+
+  user-select: none;
+}
+
+/*
+.desktop {
+  scroll-snap-type: y mandatory;
+}
+*/
+
+.night {
+  color: white;
+
+  background-color: #242f3e;
+}
