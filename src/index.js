@@ -1,3 +1,6 @@
-import './global.css';
+import Table from './components/table';
 
-alert('sdf');
+window.onload = () => {
+    const body = document.getElementsByTagName('body')[0];
+    body.appendChild(Table);
+};
