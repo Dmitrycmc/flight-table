@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.js"],"names":["__webpack_require__","r","__webpack_exports__","alert"],"mappings":"sHAAAA,EAAAC,EAAAC,GAAAF,EAAA,GAEAG,MAAM","file":"static/js/main.1e27ab3f.chunk.js","sourcesContent":["import './global.css';\r\n\r\nalert('sdf');"],"sourceRoot":""}
