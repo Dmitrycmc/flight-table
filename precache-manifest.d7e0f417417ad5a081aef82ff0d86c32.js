@@ -4,11 +4,11 @@ self.__precacheManifest = [
     "url": "/flight-table/static/js/runtime~main.f11e6b52.js"
   },
   {
-    "revision": "6c505b7c609818cf15af",
-    "url": "/flight-table/static/js/main.6a1c7265.chunk.js"
+    "revision": "2d4bd990448f3d133a42",
+    "url": "/flight-table/static/js/main.ff6f8ec3.chunk.js"
   },
   {
-    "revision": "2a93f8f42402ec8efd2d7e2e7516a59b",
+    "revision": "051dac0b03ea1a0f749731c0808f960b",
     "url": "/flight-table/index.html"
   }
 ];
