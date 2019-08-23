@@ -1,6 +1,6 @@
 class ReusableScalableVector {
-    constructor(entityConstructor) {
-        this.entityConstructor = entityConstructor;
+    constructor(entityCreator) {
+        this.entityCreator = entityCreator;
         this.unused = [];
         this.used = [];
     }
@@ -22,7 +22,7 @@ class ReusableScalableVector {
     insert = (key, data) => {
         let node;
         if (!this.unused.length) {
-            node = new this.entityConstructor(key, data);
+            node = this.entityCreator(key, data);
         } else {
             node = this.unused[0];
             this.unused = this.unused.slice(1);

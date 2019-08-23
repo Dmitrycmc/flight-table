@@ -8,24 +8,58 @@ h2 {
 }
 
 body {
-margin: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+
+  font-size: 14px;
+  font-family: Roboto,sans-serif;
 
   text-align: center;
 
   background-color: white;
 
   transition: background-color 0.2s, color 0.2s;
+}
 
+.table_wrapper {
+  width: fit-content;
+
+  border: 2px solid #222;
+}
+
+.table_row:nth-child(even) {
+    background-color: #ecf0f5;
+}
+
+.header_row, .table_row {
+  display: flex;
+  width: fit-content;
+}
+
+.header_cell, .table_cell {
+  white-space: nowrap;
 }
 
 .table_row {
-  display: flex;
 
 }
 
 .table_cell {
-  flex-grow: 1;
-  flex-basis: 30px;
+
+}
+
+.header_row {
+  border-bottom: 1px solid #222;
+
+  font-weight: bold;
+
+}
+
+.header_cell {
 
   white-space: nowrap;
 }
