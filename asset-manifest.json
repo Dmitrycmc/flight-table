@@ -1,9 +1,11 @@
 {
-  "main.js": "/flight-table/static/js/main.f4e5dc3b.chunk.js",
-  "main.js.map": "/flight-table/static/js/main.f4e5dc3b.chunk.js.map",
+  "main.css": "/flight-table/static/css/main.b610f68c.chunk.css",
+  "main.js": "/flight-table/static/js/main.765a1605.chunk.js",
+  "main.js.map": "/flight-table/static/js/main.765a1605.chunk.js.map",
   "runtime~main.js": "/flight-table/static/js/runtime~main.f11e6b52.js",
   "runtime~main.js.map": "/flight-table/static/js/runtime~main.f11e6b52.js.map",
   "index.html": "/flight-table/index.html",
-  "precache-manifest.3ecfbec9de8c9993b3c8811631db4a6e.js": "/flight-table/precache-manifest.3ecfbec9de8c9993b3c8811631db4a6e.js",
-  "service-worker.js": "/flight-table/service-worker.js"
+  "precache-manifest.6f28c4ac0d3f65b9c60afa9d078383c4.js": "/flight-table/precache-manifest.6f28c4ac0d3f65b9c60afa9d078383c4.js",
+  "service-worker.js": "/flight-table/service-worker.js",
+  "static/css/main.b610f68c.chunk.css.map": "/flight-table/static/css/main.b610f68c.chunk.css.map"
 }
