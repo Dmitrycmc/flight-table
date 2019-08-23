@@ -1,4 +1,5 @@
 import Table from './components/table';
+import './global.css';
 
 window.onload = () => {
     const body = document.getElementsByTagName('body')[0];

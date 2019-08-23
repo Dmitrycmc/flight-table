@@ -16,17 +16,17 @@ margin: 0;
 
   transition: background-color 0.2s, color 0.2s;
 
-  user-select: none;
 }
 
-/*
-.desktop {
-  scroll-snap-type: y mandatory;
-}
-*/
+.table_row {
+  display: flex;
 
-.night {
-  color: white;
-
-  background-color: #242f3e;
 }
+
+.table_cell {
+  flex-grow: 1;
+  flex-basis: 30px;
+
+  white-space: nowrap;
+}
+
