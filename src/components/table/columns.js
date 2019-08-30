@@ -1,40 +1,10 @@
-const degreesToMMSS = degrees => {
-    const fullDegrees = Math.floor(degrees);
-    const minutes = (degrees * 60) % 60;
-    const fullMinutes = Math.floor(minutes);
-    const seconds = (minutes * 60) % 60;
-
-    return { degrees: fullDegrees, minutes: fullMinutes, seconds };
-};
+import { degreesToMMSS, feetToMeters, knotsToKph } from '../../utils/unit-utils';
+import { distanceToDme } from '../../utils/coordinates-utils';
 
 const degreesPresentation = value => {
     const { degrees, minutes, seconds } = degreesToMMSS(value);
     return `${degrees}°${minutes}′${seconds.toFixed(2)}″`;
 };
-
-const feetToMeters = feet => feet / 3.28084;
-
-const knotsToKph = knots => knots * 1.852;
-
-const degreesToRadians = degrees => degrees / 180 * Math.PI;
-
-const distanceBetween = (point1, point2) => {
-    const latitude1 = degreesToRadians(point1.latitude);
-    const latitude2 = degreesToRadians(point2.latitude);
-    const longitude1 = degreesToRadians(point1.longitude);
-    const longitude2 = degreesToRadians(point2.longitude);
-
-    const cosAngle = Math.sin(latitude1) * Math.sin(latitude2) + Math.cos(latitude1) * Math.cos(latitude2) * Math.cos(longitude1 - longitude2);
-    const angle = Math.acos(cosAngle);
-
-    return angle * 6371;
-};
-
-const DmeCoordinates = {
-    latitude: 55.4103, longitude: 37.9025
-};
-
-const distanceToDme = (latitude, longitude) => distanceBetween({latitude, longitude}, DmeCoordinates);
 
 export const columns = [
     {
@@ -97,5 +67,5 @@ export const columns = [
         width: 200,
         presentation: v => `${v} км`,
         valueExtractor: data => distanceToDme(data[1], data[2]).toFixed(3)
-    },
+    }
 ];
