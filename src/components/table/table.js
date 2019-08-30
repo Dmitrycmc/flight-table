@@ -5,7 +5,7 @@ import Row from '../row';
 import Header from '../header';
 import { columns } from './columns';
 
-const UPDATE_INTERVAL = 4000;
+const UPDATE_INTERVAL = 4000000;
 const URL = 'https://data-live.flightradar24.com/zones/fcgi/feed.js?bounds=56.84,55.27,33.48,41.48';
 
 class Table {
