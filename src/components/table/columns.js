@@ -16,6 +16,26 @@ const feetToMeters = feet => feet / 3.28084;
 
 const knotsToKph = knots => knots * 1.852;
 
+const degreesToRadians = degrees => degrees / 180 * Math.PI;
+
+const distanceBetween = (point1, point2) => {
+    const latitude1 = degreesToRadians(point1.latitude);
+    const latitude2 = degreesToRadians(point2.latitude);
+    const longitude1 = degreesToRadians(point1.longitude);
+    const longitude2 = degreesToRadians(point2.longitude);
+
+    const cosAngle = Math.sin(latitude1) * Math.sin(latitude2) + Math.cos(latitude1) * Math.cos(latitude2) * Math.cos(longitude1 - longitude2);
+    const angle = Math.acos(cosAngle);
+
+    return angle * 6371;
+};
+
+const DmeCoordinates = {
+    latitude: 55.4103, longitude: 37.9025
+};
+
+const distanceToDme = (latitude, longitude) => distanceBetween({latitude, longitude}, DmeCoordinates);
+
 export const columns = [
     {
         title: 'Id',
@@ -71,5 +91,11 @@ export const columns = [
         width: 120,
         presentation: v => `${v} км/ч`,
         valueExtractor: data => knotsToKph(data[5]).toFixed(3)
+    },
+    {
+        title: 'Расстояние до аэропорта',
+        width: 200,
+        presentation: v => `${v} км`,
+        valueExtractor: data => distanceToDme(data[1], data[2]).toFixed(3)
     },
 ];
