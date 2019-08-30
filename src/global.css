@@ -4,25 +4,28 @@ body {
 
   text-align: center;
 
-  background-color: #0098fb;
+  --backgroundColor: #0098fb;
+  --verticalMargin: 30px;
+  --lineHeight: 42px;
+
+  background-color: var(--backgroundColor);
+
 
 }
 
 .table_wrapper {
   width: fit-content;
-  margin: 30px auto;
+  margin: var(--verticalMargin) auto;
 
   overflow: hidden;
-
-  border-radius: 5px;
 }
 
 .header_row, .table_row {
   display: flex;
   width: fit-content;
-  height: 42px;
+  height: var(--lineHeight);
 
-  line-height: 42px;
+  line-height: var(--lineHeight);
   white-space: nowrap;
 }
 
@@ -32,6 +35,11 @@ body {
   color: white;
 
   background-color: #1b1f24;
+
+  top: 0px;
+  position: fixed;
+  border-top: var(--verticalMargin) solid var(--backgroundColor);
+
 }
 
 .table_row:nth-child(even) {

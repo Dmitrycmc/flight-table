@@ -29,7 +29,7 @@ export const columns = [
     },
     {
         title: '8',
-        width: 80
+        width: 90
     },
     {
         title: '9',
@@ -41,7 +41,7 @@ export const columns = [
     },
     {
         title: '11',
-        width: 80
+        width: 100
     },
     {
         title: '12',
@@ -49,7 +49,7 @@ export const columns = [
     },
     {
         title: '13',
-        width: 40
+        width: 50
     },
     {
         title: '14',
@@ -57,7 +57,7 @@ export const columns = [
     },
     {
         title: '15',
-        width: 20
+        width: 50
     },
     {
         title: '16',
@@ -69,7 +69,7 @@ export const columns = [
     },
     {
         title: '18',
-        width: 20
+        width: 50
     },
     {
         title: '19',
