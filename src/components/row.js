@@ -3,19 +3,24 @@ class Row {
         this.node = document.createElement('div');
         this.node.classList.add('table_row');
 
-        this.cellNodes = [...Array(19)].map(() => document.createElement('div'));
-        this.cellNodes.forEach((cellNode, i) => {
-            cellNode.classList.add('table_cell');
-            cellNode.style.width = columns[i].width + 'px';
-            this.node.appendChild(cellNode);
-        });
+        this.cellNodes = columns.map(column => {
+            const cellNode = document.createElement('div');
 
+            cellNode.classList.add('table_cell');
+            cellNode.style.width = column.width + 'px';
+            cellNode.presentation = column.presentation;
+            cellNode.valueExtractor = column.valueExtractor;
+            this.node.appendChild(cellNode);
+
+            return cellNode;
+        });
         this.edit(key, data);
     }
 
     edit = (key, data) => {
-        this.cellNodes.forEach((cellNode, i) => {
-            cellNode.innerText = data[i];
+        this.cellNodes.forEach(cellNode => {
+            const extractedData = cellNode.valueExtractor(data);
+            cellNode.innerText = cellNode.presentation ? cellNode.presentation(extractedData) : extractedData;
         });
         this.key = key;
     };

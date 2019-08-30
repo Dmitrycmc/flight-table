@@ -1,12 +1,12 @@
 body {
-  font-size: 14px;
-  font-family: 'Courier new', Courier, monospace;
-
-  text-align: center;
 
   --backgroundColor: #0098fb;
   --verticalMargin: 30px;
   --lineHeight: 42px;
+  font-size: 14px;
+  font-family: 'Courier new', Courier, monospace;
+
+  text-align: center;
 
   background-color: var(--backgroundColor);
 
@@ -30,15 +30,16 @@ body {
 }
 
 .header_row {
+  position: fixed;
+
+  top: 0px;
+
+  border-top: var(--verticalMargin) solid var(--backgroundColor);
   border-bottom: 3px solid #a0a8b5;
 
   color: white;
 
   background-color: #1b1f24;
-
-  top: 0px;
-  position: fixed;
-  border-top: var(--verticalMargin) solid var(--backgroundColor);
 
 }
 

@@ -1,78 +1,75 @@
+const degreesToMMSS = degrees => {
+    const fullDegrees = Math.floor(degrees);
+    const minutes = (degrees * 60) % 60;
+    const fullMinutes = Math.floor(minutes);
+    const seconds = (minutes * 60) % 60;
+
+    return { degrees: fullDegrees, minutes: fullMinutes, seconds };
+};
+
+const degreesPresentation = value => {
+    const { degrees, minutes, seconds } = degreesToMMSS(value);
+    return `${degrees}°${minutes}′${seconds.toFixed(2)}″`;
+};
+
+const feetToMeters = feet => feet / 3.28084;
+
+const knotsToKph = knots => knots * 1.852;
+
 export const columns = [
     {
-        title: '1',
-        width: 80
+        title: 'Id',
+        width: 80,
+        valueExtractor: data => data[0]
     },
     {
-        title: '2',
-        width: 80
+        title: 'Авиакомпания',
+        width: 120,
+        valueExtractor: data => data[18]
     },
     {
-        title: '3',
-        width: 80
+        title: 'Рейс',
+        width: 80,
+        valueExtractor: data => data[16]
     },
     {
-        title: '4',
-        width: 40
+        title: 'Откуда',
+        width: 60,
+        valueExtractor: data => data[11]
     },
     {
-        title: '5',
-        width: 70
+        title: 'Куда',
+        width: 60,
+        valueExtractor: data => data[12]
     },
     {
-        title: '6',
-        width: 40
+        title: 'Широта',
+        width: 120,
+        presentation: degreesPresentation,
+        valueExtractor: data => data[1]
     },
     {
-        title: '7',
-        width: 80
+        title: 'Долгота',
+        width: 120,
+        presentation: degreesPresentation,
+        valueExtractor: data => data[2]
     },
     {
-        title: '8',
-        width: 90
+        title: 'Курс',
+        width: 50,
+        presentation: degrees => `${degrees}°`,
+        valueExtractor: data => data[3]
     },
     {
-        title: '9',
-        width: 70
+        title: 'Высота',
+        width: 90,
+        presentation: v => `${v} м`,
+        valueExtractor: data => feetToMeters(data[4]).toFixed(0)
     },
     {
-        title: '10',
-        width: 80
+        title: 'Скорость',
+        width: 120,
+        presentation: v => `${v} км/ч`,
+        valueExtractor: data => knotsToKph(data[5]).toFixed(3)
     },
-    {
-        title: '11',
-        width: 100
-    },
-    {
-        title: '12',
-        width: 80
-    },
-    {
-        title: '13',
-        width: 50
-    },
-    {
-        title: '14',
-        width: 80
-    },
-    {
-        title: '15',
-        width: 50
-    },
-    {
-        title: '16',
-        width: 80
-    },
-    {
-        title: '17',
-        width: 80
-    },
-    {
-        title: '18',
-        width: 50
-    },
-    {
-        title: '19',
-        width: 70
-    }
 ];
