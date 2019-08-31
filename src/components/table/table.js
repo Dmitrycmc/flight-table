@@ -1,8 +1,8 @@
 import { buildGetRequest } from '../../utils/request-utils';
 import FAKE_RESPONSE from '../../fake-response';
 import Vector from '../../utils/reuseble-scalable-vector';
-import Row from '../row';
-import Header from '../header';
+import Row from './row';
+import Header from './header';
 import { columns } from './columns';
 
 const UPDATE_INTERVAL = 2000;

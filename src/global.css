@@ -51,6 +51,10 @@ body {
     background-color: white;
 }
 
+.table_row:hover {
+    background-color: #d6d6d6;
+}
+
 .table_row:not(:last-child) {
   border-bottom: 1px solid #d6d6d6;
 }
