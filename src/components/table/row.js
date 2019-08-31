@@ -3,9 +3,10 @@ class Row {
         return this.columns[order.column].valueExtractor(this.data);
     };
 
-    constructor(columns, order, key, data) {
+    constructor(columns, order, onRowClick, key, data) {
         this.node = document.createElement('div');
         this.node.classList.add('table_row');
+        this.node.onclick = () => onRowClick(key);
         this.order = order;
         this.data = data;
         this.columns = columns;

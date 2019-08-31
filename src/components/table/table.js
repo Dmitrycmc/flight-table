@@ -5,7 +5,7 @@ import Row from './row';
 import Header from './header';
 import { columns } from './columns';
 
-const UPDATE_INTERVAL = 2000;
+const UPDATE_INTERVAL = 2000000;
 const URL = 'https://data-live.flightradar24.com/zones/fcgi/feed.js?bounds=56.84,55.27,33.48,41.48';
 
 class Table {
@@ -13,7 +13,8 @@ class Table {
         this.node = document.createElement('div');
         this.node.classList.add('table_wrapper');
         this.order = { column: 10, type: 'asc' };
-        this.rows = new Vector((...args) => new Row(columns, this.order, ...args));
+        this.selectedRowKey = null;
+        this.rows = new Vector((...args) => new Row(columns, this.order, this.handleRowClick, ...args));
         this.header = new Header(columns, this.order, this.sort);
         this.node.appendChild(this.header.node);
         this.update();
@@ -21,6 +22,20 @@ class Table {
             this.update();
         }, UPDATE_INTERVAL);
     }
+
+    toggleRowHighlight = key => {
+        this.rows.data.find(r => r.key === key).node.classList.toggle('highlighted');
+    };
+
+    handleRowClick = key => {
+        this.toggleRowHighlight(key);
+        if (this.selectedRowKey !== key) {
+            this.selectedRowKey && this.toggleRowHighlight(this.selectedRowKey);
+            this.selectedRowKey = key;
+        } else {
+            this.selectedRowKey = null;
+        }
+    };
 
     update = () => {
         const request = buildGetRequest(URL);
