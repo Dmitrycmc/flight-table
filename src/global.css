@@ -63,4 +63,9 @@ body {
   border-right: 1px solid #d6d6d6;
 }
 
+.header_cell {
+  cursor: pointer;
+
+  user-select: none;
+}
 

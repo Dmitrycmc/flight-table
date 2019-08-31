@@ -14,7 +14,7 @@ export const columns = [
     },
     {
         title: 'Авиакомпания',
-        width: 120,
+        width: 130,
         valueExtractor: data => data[18]
     },
     {
@@ -24,12 +24,12 @@ export const columns = [
     },
     {
         title: 'Откуда',
-        width: 60,
+        width: 80,
         valueExtractor: data => data[11]
     },
     {
         title: 'Куда',
-        width: 60,
+        width: 80,
         valueExtractor: data => data[12]
     },
     {
@@ -46,7 +46,7 @@ export const columns = [
     },
     {
         title: 'Курс',
-        width: 50,
+        width: 60,
         presentation: degrees => `${degrees}°`,
         valueExtractor: data => data[3]
     },
@@ -64,7 +64,7 @@ export const columns = [
     },
     {
         title: 'Расстояние до аэропорта',
-        width: 200,
+        width: 230,
         presentation: v => `${v} км`,
         valueExtractor: data => distanceToDme(data[1], data[2]).toFixed(3)
     }

@@ -12,8 +12,10 @@ class Table {
     constructor() {
         this.node = document.createElement('div');
         this.node.classList.add('table_wrapper');
-        this.rows = new Vector((...args) => new Row(columns, ...args));
-        this.header = new Header(columns);
+        this.order = { column: 10, type: 'asc' };
+        this.rows = new Vector((...args) => new Row(columns, this.order, ...args));
+        this.header = new Header(columns, this.order, this.sort);
+        this.node.appendChild(this.header.node);
         this.update();
         setInterval(() => {
             this.update();
@@ -31,9 +33,9 @@ class Table {
             });
     };
 
-    removeAllChildren = () => {
-        while (this.node.hasChildNodes()) {
-            this.node.removeChild(this.node.firstChild);
+    removeBody = () => {
+        while (this.node.childNodes.length > 1) {
+            this.node.removeChild(this.node.lastChild);
         }
     };
 
@@ -53,10 +55,23 @@ class Table {
             this.rows.updateByKey(key, data[key]);
         });
 
-        this.removeAllChildren();
+        this.sort();
+    };
 
-        this.node.appendChild(this.header.node);
-        this.rows.data.forEach(r => this.node.appendChild(r.node));
+    sort = () => {
+        this.removeBody();
+
+        this.rows.data
+            .sort((a, b) => {
+                const val1 = a.getSortKey(this.order);
+                const val2 = b.getSortKey(this.order);
+
+                const type = (this.order.type === 'asc' ? 1 : -1);
+
+                if (!isNaN(val1)) return type * (val1 - val2);
+                return type * val1.localeCompare(val2);
+            })
+            .forEach(r => this.node.appendChild(r.node));
     };
 }
 
