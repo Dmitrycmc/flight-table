@@ -1,12 +1,20 @@
-import { degreesToMMSS, feetToMeters, knotsToKph } from '../../utils/unit-utils';
-import { distanceToDme } from '../../utils/coordinates-utils';
+import { degreesToMMSS, feetToMeters, knotsToKph } from './utils/unit-utils';
+import { distanceToDme } from './utils/coordinates-utils';
 
-const degreesPresentation = value => {
+const coordinatePresentation = value => {
     const { degrees, minutes, seconds } = degreesToMMSS(value);
     return `${degrees}°${minutes}′${seconds.toFixed(2)}″`;
 };
 
-export const columns = [
+const anglePresentation = degrees => `${degrees}°`;
+
+const distancePresentation = v => `${v.toFixed(3)} км`;
+
+const speedPresentation = v => `${v.toFixed(3)} км/ч`;
+
+const heightPresentation = v => `${v.toFixed(0)} м`;
+
+export default [
     {
         title: 'Id',
         width: 80,
@@ -35,37 +43,37 @@ export const columns = [
     {
         title: 'Широта',
         width: 120,
-        presentation: degreesPresentation,
+        presentation: coordinatePresentation,
         valueExtractor: data => data[1]
     },
     {
         title: 'Долгота',
         width: 120,
-        presentation: degreesPresentation,
+        presentation: coordinatePresentation,
         valueExtractor: data => data[2]
     },
     {
         title: 'Курс',
         width: 60,
-        presentation: degrees => `${degrees}°`,
+        presentation: anglePresentation,
         valueExtractor: data => data[3]
     },
     {
         title: 'Высота',
         width: 90,
-        presentation: v => `${v} м`,
-        valueExtractor: data => feetToMeters(data[4]).toFixed(0)
+        presentation: heightPresentation,
+        valueExtractor: data => feetToMeters(data[4])
     },
     {
         title: 'Скорость',
         width: 120,
-        presentation: v => `${v} км/ч`,
-        valueExtractor: data => knotsToKph(data[5]).toFixed(3)
+        presentation: speedPresentation,
+        valueExtractor: data => knotsToKph(data[5])
     },
     {
         title: 'Расстояние до аэропорта',
         width: 230,
-        presentation: v => `${v} км`,
-        valueExtractor: data => distanceToDme(data[1], data[2]).toFixed(3)
+        presentation: distancePresentation,
+        valueExtractor: data => distanceToDme(data[1], data[2])
     }
 ];

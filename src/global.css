@@ -15,7 +15,7 @@ body {
 
 .table_wrapper {
   width: fit-content;
-  margin: var(--verticalMargin) auto;
+  margin: calc(var(--verticalMargin) + var(--lineHeight)) auto var(--verticalMargin);
 
   overflow: hidden;
 }

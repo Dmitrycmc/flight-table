@@ -1,3 +1,6 @@
+import { devMode } from './dev-utils';
+import FAKE_RESPONSE from '../fake-response';
+
 export const buildGetRequest = url => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -11,7 +14,11 @@ export const buildGetRequest = url => {
                     const jsonResponse = JSON.parse(xhr.responseText);
                     resolve(jsonResponse);
                 } else {
-                    reject();
+                    if (devMode()) {
+                        resolve(FAKE_RESPONSE);
+                    } else {
+                        reject();
+                    }
                 }
             }
         };

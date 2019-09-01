@@ -1,17 +1,16 @@
+import { createNode } from '../../utils/dom-utils';
+
 class Header {
-    constructor(columns, order, handleSorting) {
-        this.node = document.createElement('div');
-        this.node.classList.add('header_row');
-        this.order = order;
-        this.columns = columns;
-        this.handleSorting = handleSorting;
+    constructor({ columns, order }) {
+        this.props = { columns, order };
+        this.node = createNode({ className: 'header_row' });
 
         this.cellNodes = columns.map((column, i) => {
-            const cellNode = document.createElement('div');
-
-            cellNode.classList.add('header_cell');
-            cellNode.style.width = column.width + 'px';
-            cellNode.onclick = () => this.handleClick(i);
+            const cellNode = createNode({
+                className: 'header_cell',
+                width: column.width,
+                onClick: () => this.handleClick(i)
+            });
 
             this.node.appendChild(cellNode);
 
@@ -23,18 +22,17 @@ class Header {
 
     update = () => {
         this.cellNodes.forEach((cellNode, i) => {
-            const triangle = this.order.type === 'asc' ? ' ▲' : ' ▼';
-            cellNode.innerText = this.columns[i].title + (this.order.column === i ? triangle : '');
+            const triangle = this.props.order.type === 'asc' ? ' ▲' : ' ▼';
+            cellNode.innerText = this.props.columns[i].title + (this.props.order.column === i ? triangle : '');
         });
-        this.handleSorting();
     };
 
     handleClick = i => {
-        if (this.order.column === i) {
-            this.order.type = this.order.type === 'asc' ? 'desc' : 'asc';
+        if (this.props.order.column === i) {
+            this.props.order.type = this.props.order.type === 'asc' ? 'desc' : 'asc';
         } else {
-            this.order.column = i;
-            this.order.type = 'asc';
+            this.props.order.column = i;
+            this.props.order.type = 'asc';
         }
         this.update();
     };

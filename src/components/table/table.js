@@ -1,51 +1,53 @@
 import { buildGetRequest } from '../../utils/request-utils';
-import FAKE_RESPONSE from '../../fake-response';
-import Vector from '../../utils/reuseble-scalable-vector';
 import Row from './row';
 import Header from './header';
-import { columns } from './columns';
-
-const UPDATE_INTERVAL = 2000000;
-const URL = 'https://data-live.flightradar24.com/zones/fcgi/feed.js?bounds=56.84,55.27,33.48,41.48';
+import { createNode } from '../../utils/dom-utils';
+import { buildState } from '../../utils/state';
 
 class Table {
-    constructor() {
-        this.node = document.createElement('div');
-        this.node.classList.add('table_wrapper');
-        this.order = { column: 10, type: 'asc' };
-        this.selectedRowKey = null;
-        this.rows = new Vector((...args) => new Row(columns, this.order, this.handleRowClick, ...args));
-        this.header = new Header(columns, this.order, this.sort);
+    constructor({ columns, url, updateInterval }) {
+        this.props = { columns };
+        this.state = {
+            order: buildState({
+                column: { init: 10, callback: this.sort },
+                type: { init: 'asc', callback: this.sort }
+            }),
+            selection: buildState({
+                rowKey: { init: null, callback: this.updateSelection }
+            })
+        };
+
+        this.dataState = buildState({
+            rawData: { init: {}, callback: this.sort },
+            sortedData: { init: [], callback: this.rerender }
+        });
+
+        this.node = createNode({
+            className: 'table_wrapper'
+        });
+
+        this.header = new Header({ columns, order: this.state.order });
         this.node.appendChild(this.header.node);
-        this.update();
+
+        this.update(url);
         setInterval(() => {
-            this.update();
-        }, UPDATE_INTERVAL);
+            this.update(url);
+        }, updateInterval);
     }
 
-    toggleRowHighlight = key => {
-        this.rows.data.find(r => r.key === key).node.classList.toggle('highlighted');
+    updateSelection = () => {
+        this.rows.forEach(r => r.node.classList.remove('highlighted'));
+        this.state.selection.rowKey &&
+            this.rows.find(r => r.key === this.state.selection.rowKey).node.classList.add('highlighted');
     };
 
-    handleRowClick = key => {
-        this.toggleRowHighlight(key);
-        if (this.selectedRowKey !== key) {
-            this.selectedRowKey && this.toggleRowHighlight(this.selectedRowKey);
-            this.selectedRowKey = key;
-        } else {
-            this.selectedRowKey = null;
-        }
-    };
-
-    update = () => {
-        const request = buildGetRequest(URL);
+    update = url => {
+        const request = buildGetRequest(url);
         request
-            .then(res => {
-                this.rerender(res);
+            .then(({ full_count, version, ...data }) => {
+                this.dataState.rawData = data;
             })
-            .catch(res => {
-                this.rerender(FAKE_RESPONSE);
-            });
+            .catch(() => {});
     };
 
     removeBody = () => {
@@ -54,39 +56,36 @@ class Table {
         }
     };
 
-    rerender = ({ full_count, version, ...data }) => {
-        const dataKeys = Object.keys(data);
-        const deletedKeys = this.rows.data.map(row => row.key).filter(rowKey => dataKeys.every(key => rowKey !== key));
-        const newDataKeys = dataKeys.filter(key => this.rows.data.every(row => row.key !== key));
-        const updatedKeys = dataKeys.filter(key => this.rows.data.some(row => row.key !== key));
+    rerender = () => {
+        this.removeBody();
 
-        deletedKeys.forEach(key => {
-            this.rows.deleteByKey(key);
-        });
-        newDataKeys.forEach(key => {
-            this.rows.insert(key, data[key]);
-        });
-        updatedKeys.forEach(key => {
-            this.rows.updateByKey(key, data[key]);
-        });
+        this.rows = this.dataState.sortedData.map(
+            rowData =>
+                new Row({
+                    columns: this.props.columns,
+                    order: this.state.order,
+                    selection: this.state.selection,
+                    key: rowData.key,
+                    data: rowData.data
+                })
+        );
 
-        this.sort();
+        this.rows.forEach(r => this.node.appendChild(r.node));
     };
 
     sort = () => {
-        this.removeBody();
-
-        this.rows.data
+        this.dataState.sortedData = Object.entries(this.dataState.rawData)
+            .map(([key, data]) => ({ key, data }))
             .sort((a, b) => {
-                const val1 = a.getSortKey(this.order);
-                const val2 = b.getSortKey(this.order);
+                const val1 = this.props.columns[this.state.order.column].valueExtractor(a.data);
+                const val2 = this.props.columns[this.state.order.column].valueExtractor(b.data);
 
-                const type = (this.order.type === 'asc' ? 1 : -1);
+                const type = this.state.order.type === 'asc' ? 1 : -1;
 
                 if (!isNaN(val1)) return type * (val1 - val2);
                 return type * val1.localeCompare(val2);
-            })
-            .forEach(r => this.node.appendChild(r.node));
+            });
+        this.updateSelection();
     };
 }
 

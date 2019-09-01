@@ -1,21 +1,24 @@
+import { createNode } from '../../utils/dom-utils';
+
 class Row {
-    getSortKey = order => {
-        return this.columns[order.column].valueExtractor(this.data);
+    getSortKey = () => {
+        return this.props.columns[this.props.order.column].valueExtractor(this.data);
     };
 
-    constructor(columns, order, onRowClick, key, data) {
-        this.node = document.createElement('div');
-        this.node.classList.add('table_row');
-        this.node.onclick = () => onRowClick(key);
-        this.order = order;
+    handleRowClick = () => {
+        this.props.selection.rowKey = this.props.selection.rowKey !== this.key ? this.key : null;
+    };
+
+    constructor({ columns, order, selection, key, data }) {
+        this.node = createNode({ className: 'table_row', onClick: this.handleRowClick });
+
+        this.props = { order, columns, selection };
+        this.key = key;
         this.data = data;
-        this.columns = columns;
 
         this.cellNodes = columns.map(column => {
-            const cellNode = document.createElement('div');
+            const cellNode = createNode({ className: 'table_cell', width: column.width });
 
-            cellNode.classList.add('table_cell');
-            cellNode.style.width = column.width + 'px';
             cellNode.presentation = column.presentation;
             cellNode.valueExtractor = column.valueExtractor;
             this.node.appendChild(cellNode);
