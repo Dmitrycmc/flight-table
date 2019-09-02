@@ -1,18 +1,14 @@
 import { createNode } from '../../utils/dom-utils';
 
 class Row {
-    getSortKey = () => {
-        return this.props.columns[this.props.order.column].valueExtractor(this.data);
-    };
-
     handleRowClick = () => {
         this.props.selection.rowKey = this.props.selection.rowKey !== this.key ? this.key : null;
     };
 
-    constructor({ columns, order, selection, key, data }) {
+    constructor({ columns, selection, key, data }) {
         this.node = createNode({ className: 'table_row', onClick: this.handleRowClick });
 
-        this.props = { order, columns, selection };
+        this.props = { selection };
         this.key = key;
         this.data = data;
 
@@ -21,6 +17,7 @@ class Row {
 
             cellNode.presentation = column.presentation;
             cellNode.valueExtractor = column.valueExtractor;
+            cellNode.link = column.link;
             this.node.appendChild(cellNode);
 
             return cellNode;
@@ -32,7 +29,20 @@ class Row {
         this.data = data;
         this.cellNodes.forEach(cellNode => {
             const extractedData = cellNode.valueExtractor(data);
-            cellNode.innerText = cellNode.presentation ? cellNode.presentation(extractedData) : extractedData;
+            const text = cellNode.presentation ? cellNode.presentation(extractedData) : extractedData;
+            if (cellNode.link) {
+                const linkUrl = cellNode.link(extractedData);
+                const linkNode = createNode({
+                    tagName: 'a',
+                    href: linkUrl,
+                    className: 'table_link',
+                    text,
+                    title: 'Смотреть на flightradar24.com'
+                });
+                cellNode.appendChild(linkNode);
+            } else {
+                cellNode.innerText = text;
+            }
         });
         this.key = key;
     };

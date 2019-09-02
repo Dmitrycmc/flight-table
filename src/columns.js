@@ -28,6 +28,7 @@ export default [
     {
         title: 'Рейс',
         width: 80,
+        link: v => `https://www.flightradar24.com/${v}`,
         valueExtractor: data => data[16]
     },
     {

@@ -77,3 +77,8 @@ body {
   user-select: none;
 }
 
+.table_link {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}

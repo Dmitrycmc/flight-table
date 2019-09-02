@@ -63,7 +63,6 @@ class Table {
             rowData =>
                 new Row({
                     columns: this.props.columns,
-                    order: this.state.order,
                     selection: this.state.selection,
                     key: rowData.key,
                     data: rowData.data
