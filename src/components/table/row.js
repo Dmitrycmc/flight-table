@@ -35,7 +35,7 @@ class Row {
                 const linkNode = createNode({
                     tagName: 'a',
                     href: linkUrl,
-                    className: 'table_link',
+                    className: 'link',
                     text,
                     title: 'Смотреть на flightradar24.com'
                 });

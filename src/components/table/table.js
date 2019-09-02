@@ -14,16 +14,15 @@ class Table {
             }),
             selection: buildState({
                 rowKey: { init: null, callback: this.updateSelection }
+            }),
+            dataState: buildState({
+                rawData: { init: {}, callback: this.sort },
+                sortedData: { init: [], callback: this.rerender }
             })
         };
 
-        this.dataState = buildState({
-            rawData: { init: {}, callback: this.sort },
-            sortedData: { init: [], callback: this.rerender }
-        });
-
         this.node = createNode({
-            className: 'table_wrapper'
+            className: 'table_wrapper hidden'
         });
 
         this.header = new Header({ columns, order: this.state.order });
@@ -45,7 +44,7 @@ class Table {
         const request = buildGetRequest(url);
         request
             .then(({ full_count, version, ...data }) => {
-                this.dataState.rawData = data;
+                this.state.dataState.rawData = data;
             })
             .catch(() => {});
     };
@@ -57,9 +56,10 @@ class Table {
     };
 
     rerender = () => {
+        this.node.classList.remove('hidden');
         this.removeBody();
 
-        this.rows = this.dataState.sortedData.map(
+        this.rows = this.state.dataState.sortedData.map(
             rowData =>
                 new Row({
                     columns: this.props.columns,
@@ -73,16 +73,18 @@ class Table {
     };
 
     sort = () => {
-        this.dataState.sortedData = Object.entries(this.dataState.rawData)
+        const { order, dataState } = this.state;
+        dataState.sortedData = Object.entries(dataState.rawData)
             .map(([key, data]) => ({ key, data }))
             .sort((a, b) => {
-                const val1 = this.props.columns[this.state.order.column].valueExtractor(a.data);
-                const val2 = this.props.columns[this.state.order.column].valueExtractor(b.data);
+                const sortKeyExtractor = this.props.columns[order.column].valueExtractor;
+                const val1 = sortKeyExtractor(a.data);
+                const val2 = sortKeyExtractor(b.data);
 
-                const type = this.state.order.type === 'asc' ? 1 : -1;
+                const sign = order.type === 'asc' ? 1 : -1;
 
-                if (!isNaN(val1)) return type * (val1 - val2);
-                return type * val1.localeCompare(val2);
+                if (!isNaN(val1)) return sign * (val1 - val2);
+                return sign * val1.localeCompare(val2);
             });
         this.updateSelection();
     };
