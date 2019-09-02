@@ -3,7 +3,7 @@ import { distanceToDme } from './utils/coordinates-utils';
 
 const coordinatePresentation = value => {
     const { degrees, minutes, seconds } = degreesToMMSS(value);
-    return `${degrees}°${minutes}′${seconds.toFixed(2)}″`;
+    return `${degrees}°${minutes}′ ${seconds.toFixed(1)}″`;
 };
 
 const anglePresentation = degrees => `${degrees}°`;
@@ -15,7 +15,7 @@ const speedPresentation = v => `${v.toFixed(3)} км/ч`;
 const heightPresentation = v => `${v.toFixed(0)} м`;
 
 export default [
-    {
+    /*{
         title: 'Id',
         width: 80,
         valueExtractor: data => data[0]
@@ -24,7 +24,7 @@ export default [
         title: 'Авиакомпания',
         width: 130,
         valueExtractor: data => data[18]
-    },
+    },*/
     {
         title: 'Рейс',
         width: 80,
@@ -43,13 +43,13 @@ export default [
     },
     {
         title: 'Широта',
-        width: 120,
+        width: 130,
         presentation: coordinatePresentation,
         valueExtractor: data => data[1]
     },
     {
         title: 'Долгота',
-        width: 120,
+        width: 130,
         presentation: coordinatePresentation,
         valueExtractor: data => data[2]
     },
@@ -72,7 +72,7 @@ export default [
         valueExtractor: data => knotsToKph(data[5])
     },
     {
-        title: 'Расстояние до аэропорта',
+        title: 'До DME',
         width: 230,
         presentation: distancePresentation,
         valueExtractor: data => distanceToDme(data[1], data[2])

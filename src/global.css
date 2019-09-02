@@ -2,6 +2,7 @@ body {
   --backgroundColor: #0098fb;
   --verticalMargin: 30px;
   --lineHeight: 42px;
+  --titleHeight: 60px;
   margin: 0;
 
   font-size: 14px;
@@ -20,10 +21,10 @@ body {
   position: sticky;
   top: 0;
 
-  height: calc(2 * var(--verticalMargin));
+  height: var(--titleHeight);
 
   font-size: 30px;
-  line-height: calc(2 * var(--verticalMargin));
+  line-height: var(--titleHeight);
 
   background-color: var(--backgroundColor);
 }
@@ -47,7 +48,7 @@ body {
 .header_row {
   position: fixed;
 
-  top: calc(2 * var(--verticalMargin));
+  top: var(--titleHeight);
 
   color: white;
 
@@ -97,4 +98,50 @@ body {
 
 .tag {
   margin-bottom: var(--verticalMargin);
+}
+
+@media (max-width: 1050px) {
+  body {
+    --verticalMargin: 10px;
+    --lineHeight: 21px;
+    --titleHeight: 45px;
+    font-size: 10px;
+  }
+
+  .header_cell, .table_cell {
+    width: 80px !important;
+  }
+}
+
+@media (max-width: 765px) {
+  body {
+    --verticalMargin: 10px;
+    --lineHeight: 15px;
+    --titleHeight: 35px;
+    font-size: 8px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .header_cell, .table_cell {
+    width: 38px !important;
+
+    white-space: initial;
+  }
+
+  .header_row {
+    height: calc(2 * var(--lineHeight));
+
+    white-space: initial;
+  }
+
+  .table_row {
+    height: calc(2 * var(--lineHeight));
+  }
+
+  .table_wrapper {
+    margin-top: calc(2 * var(--lineHeight));
+  }
 }

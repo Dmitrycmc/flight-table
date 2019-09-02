@@ -9,7 +9,7 @@ class Table {
         this.props = { columns };
         this.state = {
             order: buildState({
-                column: { init: 10, callback: this.sort },
+                column: { init: 8, callback: this.sort },
                 type: { init: 'asc', callback: this.sort }
             }),
             selection: buildState({
